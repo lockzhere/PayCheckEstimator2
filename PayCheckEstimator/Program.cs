@@ -74,7 +74,7 @@ namespace PayCheckEstimator
             stdPay = stdTime * wage;
             oTimePay = oTime * (wage * 1.5);
             gross = stdPay + oTimePay;
-            net = stdPay + oTimePay - (oTimePay * 100 - 30) / 100;
+            net = gross * (100-30)/100;
 
             Console.WriteLine("Estimate paycheck based off of: {0} Standard Hours @ {1}, {2} Overtime hours at {3}", stdTime, wage, oTime, wage * 1.5);
             Console.WriteLine("Standard hours are paying: {0}", stdPay);
@@ -82,8 +82,8 @@ namespace PayCheckEstimator
             
 
             Console.WriteLine("Estimated Paycheck values are; Gross: {0}, Net: {1}.", gross, net);
-            double percent = PercInc(net, gross);
-            Console.WriteLine("TEST: Percentage paid to taxes: {0}", percent);
+            double percent = PercDec(net, gross);
+            Console.WriteLine("TEST: Percentage paid to taxes: {0}%", percent);
             Console.ReadLine();
             CleanUp();
         }
@@ -103,12 +103,13 @@ namespace PayCheckEstimator
             Console.WriteLine("Thank you!\r\nPress a key to exit this program");
         }
 
-        public static int PercInc(double low, double high)
+        public static double PercDec(double low, double high)
         {
-            double difference = high - low;
-            double holding = difference / low;
-            double percInc = holding * 100;
-            return (int)percInc;
+            // Double check calculation for percentage, just to be sure we didn't fuck anything up.
+            // also, to work on passing values through seperate methods. (IE, not sure if i need double. but it return the percents i originally used)
+            double percInc = ((high - low) / high) * 100; //re-worked this down to a single line compared to seperating operations into different variables
+            //Console.WriteLine("perc: {0}", percInc);
+            return (double)percInc;
 
         }
     }
