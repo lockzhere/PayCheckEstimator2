@@ -82,6 +82,8 @@ namespace PayCheckEstimator
             
 
             Console.WriteLine("Estimated Paycheck values are; Gross: {0}, Net: {1}.", gross, net);
+            double percent = PercInc(net, gross);
+            Console.WriteLine("TEST: Percentage paid to taxes: {0}", percent);
             Console.ReadLine();
             CleanUp();
         }
@@ -99,6 +101,15 @@ namespace PayCheckEstimator
             Console.ForegroundColor = ConsoleColor.White;
             Console.Clear();
             Console.WriteLine("Thank you!\r\nPress a key to exit this program");
+        }
+
+        public static int PercInc(double low, double high)
+        {
+            double difference = high - low;
+            double holding = difference / low;
+            double percInc = holding * 100;
+            return (int)percInc;
+
         }
     }
 }
