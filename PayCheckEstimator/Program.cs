@@ -20,16 +20,22 @@ namespace PayCheckEstimator
         {
             Console.ForegroundColor = ConsoleColor.White;
             //Get users current wages
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Enter Wages: ");
-            wage = Convert.ToInt32(Console.ReadLine());
+            //wage = Convert.ToInt32(Console.ReadLine());
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            wage = Convert.ToDouble(Console.ReadLine());
+            Console.ForegroundColor = ConsoleColor.White;
 
             // get users total week 1 hours
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Enter week 1 Hours: ");
-            holdingHours = Convert.ToInt32(Console.ReadLine());
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            holdingHours = Convert.ToDouble(Console.ReadLine());
+            Console.ForegroundColor = ConsoleColor.White;
 
             // split hours 40/ot
-
-            //Somewhere along here, entering a decimal point is throwing an exception. Fix it!
 
             if (holdingHours > 40)
             {
@@ -48,8 +54,11 @@ namespace PayCheckEstimator
             // get users total week 2 Hours
 
             Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Enter week 2 Hours: ");
-            holdingHours = Convert.ToInt32(Console.ReadLine());
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            holdingHours = Convert.ToDouble(Console.ReadLine());
+            Console.ForegroundColor = ConsoleColor.White;
 
             // Split week 2 hours (40)/OT
 
@@ -86,14 +95,6 @@ namespace PayCheckEstimator
             Console.WriteLine("TEST: Percentage paid to taxes: {0}%", percent);
             Console.ReadLine();
             CleanUp();
-        }
-
-        public static void ConsoleWrite(ConsoleColor color, string text)
-        {
-            ConsoleColor originalColor = Console.ForegroundColor;
-            Console.ForegroundColor = color;
-            Console.Write(text);
-            Console.ForegroundColor = originalColor;
         }
 
         public static void CleanUp()
