@@ -8,15 +8,10 @@ namespace PayCheckEstimator
 {
     class Program
     {
-        static double wage = 0;
-        static double oTime = 0;
-        static double oTimePay = 0;
-        static double stdTime = 0;
-        static double stdPay = 0;
-        static double holdingHours = 0;
-        static double net = 0;
-        static double gross = 0;
+        static double wage, oTime, oTimePay, stdTime, stdPay, holdingHours, net, gross = 0;
         static int week = 0;
+
+
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.White;
@@ -48,7 +43,10 @@ namespace PayCheckEstimator
 
             Console.WriteLine("Estimated Paycheck values are; Gross: {0}, Net: {1}.", gross, net);
             double percent = PercDec(net, gross);
-            Console.WriteLine("TEST: Percentage paid to taxes: {0}%", percent);
+
+
+            Console.WriteLine("TEST: Percentage paid to taxes: {1}%", Console.ForegroundColor = ConsoleColor.Gray, percent);
+            Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
             CleanUp();
         }
@@ -65,14 +63,14 @@ namespace PayCheckEstimator
             // Double check calculation for percentage, just to be sure we didn't fuck anything up.
             // also, to work on passing values through seperate methods. (IE, not sure if i need double. but it return the percents i originally used)
             double percInc = ((high - low) / high) * 100; //re-worked this down to a single line compared to seperating operations into different variables
-            //Console.WriteLine("perc: {0}", percInc);
+
             return (double)percInc;
 
         }
 
         public static void GetHours()
         {
-            week++;
+            week++; //since week is set as 0 at the beginning, we need to add one (first call) for week one(1), and add 1 again to get week two(2)
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Enter week {0} hours: ", week);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -83,14 +81,14 @@ namespace PayCheckEstimator
             {
                 oTime = oTime + (holdingHours - 40); // Preserving original oTime, and adding new.
                 stdTime = stdTime + 40; // Same as above.
-                Console.WriteLine("Total oTime: {0}, Total stdTime: {1}", oTime, stdTime);
+                
 
             }
 
             else if (holdingHours <= 40)
             {
                 stdTime = stdTime + holdingHours;
-                Console.WriteLine("Total oTime: {0}, Total stdTime: {1}", oTime, stdTime);
+                
             }
         }
     }
