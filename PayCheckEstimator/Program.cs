@@ -8,14 +8,15 @@ namespace PayCheckEstimator
 {
     class Program
     {
-        static double wage;
-        static double oTime;
-        static double oTimePay;
-        static double stdTime;
-        static double stdPay;
-        static double holdingHours;
-        static double net;
-        static double gross;
+        static double wage = 0;
+        static double oTime = 0;
+        static double oTimePay = 0;
+        static double stdTime = 0;
+        static double stdPay = 0;
+        static double holdingHours = 0;
+        static double net = 0;
+        static double gross = 0;
+        static int week = 0;
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.White;
@@ -28,53 +29,8 @@ namespace PayCheckEstimator
             wage = Convert.ToDouble(Console.ReadLine());
             Console.ForegroundColor = ConsoleColor.White;
 
-            // get users total week 1 hours
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("Enter week 1 Hours: ");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            holdingHours = Convert.ToDouble(Console.ReadLine());
-            Console.ForegroundColor = ConsoleColor.White;
-
-            // split hours 40/ot
-
-            if (holdingHours > 40)
-            {
-                oTime = oTime + (holdingHours - 40); // () should ensure we remove std hours first before adding to Otime
-                stdTime = stdTime + 40; //              (this will be 40 if holdingHours is > 40)
-                Console.WriteLine("if true; OT:{0}, std:{1}", oTime, stdTime);
-            }
-
-            else if (holdingHours <= 40)
-            {
-                stdTime = stdTime + holdingHours;
-                Console.WriteLine("Entered Hours with no Overtime; w1 oTime: {0}, stdTime {1}", oTime, stdTime);
-            }
-
-
-            // get users total week 2 Hours
-
-            Console.WriteLine("");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("Enter week 2 Hours: ");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            holdingHours = Convert.ToDouble(Console.ReadLine());
-            Console.ForegroundColor = ConsoleColor.White;
-
-            // Split week 2 hours (40)/OT
-
-            if (holdingHours > 40)
-            {
-                oTime = oTime + (holdingHours - 40); // Preserving original oTime, and adding new.
-                stdTime = stdTime + 40; // Same as above.
-                Console.WriteLine("Total oTime: {0}, Total stdTime: {1}", oTime, stdTime);
-            }
-
-            else if (holdingHours <= 40)
-            {
-                stdTime = stdTime + holdingHours;
-                Console.WriteLine("Total oTime: {0}, Total stdTime: {1}", oTime, stdTime);
-            }
-
+            GetHours();
+            GetHours();
 
             // Break apart user input from program calculations.
             Console.WriteLine(" ");
@@ -83,7 +39,7 @@ namespace PayCheckEstimator
             stdPay = stdTime * wage;
             oTimePay = oTime * (wage * 1.5);
             gross = stdPay + oTimePay;
-            net = gross * (100-30)/100;
+            net = gross * (100-33.5)/100;
 
             Console.WriteLine("Estimate paycheck based off of: {0} Standard Hours @ {1}, {2} Overtime hours at {3}", stdTime, wage, oTime, wage * 1.5);
             Console.WriteLine("Standard hours are paying: {0}", stdPay);
@@ -112,6 +68,30 @@ namespace PayCheckEstimator
             //Console.WriteLine("perc: {0}", percInc);
             return (double)percInc;
 
+        }
+
+        public static void GetHours()
+        {
+            week++;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Enter week {0} hours: ", week);
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            holdingHours = Convert.ToDouble(Console.ReadLine());
+            Console.ForegroundColor = ConsoleColor.White;
+
+            if (holdingHours > 40)
+            {
+                oTime = oTime + (holdingHours - 40); // Preserving original oTime, and adding new.
+                stdTime = stdTime + 40; // Same as above.
+                Console.WriteLine("Total oTime: {0}, Total stdTime: {1}", oTime, stdTime);
+
+            }
+
+            else if (holdingHours <= 40)
+            {
+                stdTime = stdTime + holdingHours;
+                Console.WriteLine("Total oTime: {0}, Total stdTime: {1}", oTime, stdTime);
+            }
         }
     }
 }
