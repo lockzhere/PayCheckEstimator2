@@ -8,47 +8,45 @@ namespace PayCheckEstimator
 {
     class Program
     {
-        static double wage, oTime, oTimePay, stdTime, stdPay, holdingHours, net, gross = 0;
+        static double wage, shopWage, oWage, oShop, shopTime, oTime, oTimePay, stdTime, stdPay, holdingHours, net, gross = 0;
         static int week = 0;
 
 
         static void Main(string[] args)
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            //Get users current wages
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("Enter Wages: ");
-            //wage = Convert.ToInt32(Console.ReadLine());
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            wage = Convert.ToDouble(Console.ReadLine());
-            Console.ForegroundColor = ConsoleColor.White;
+            GatherWages();
 
             GetHours();
             GetHours();
 
-            // Break apart user input from program calculations.
-            Console.WriteLine(" ");
-            Console.WriteLine("");
+            Break();
 
-            stdPay = stdTime * wage;
-            oTimePay = oTime * (wage * 1.5);
-            gross = stdPay + oTimePay;
-            net = gross * (100-33.5)/100;
+            Calc();
 
-            Console.WriteLine("Estimate paycheck based off of: {0} Standard Hours @ {1}, {2} Overtime hours at {3}", stdTime, wage, oTime, wage * 1.5);
+            Console.WriteLine("Estimate paycheck based off of: {0} Standard Hours at ${1}, {2} Overtime hours at ${3}", stdTime, wage, oTime, oWage);
             Console.WriteLine("Standard hours are paying: {0}", stdPay);
             Console.WriteLine("Overtime Hours are paying: {0}", oTimePay);
             
 
-            Console.WriteLine("Estimated Paycheck values are; Gross: {0}, Net: {1}.", gross, net);
+            Console.WriteLine("Estimated Paycheck values are; Gross: ${0}, Net: ${1}.", gross, net);
             double percent = PercDec(net, gross);
 
-
-            Console.WriteLine("TEST: Percentage paid to taxes: {1}%", Console.ForegroundColor = ConsoleColor.Gray, percent);
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write("Estimated percentage paid to taxes: ");
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.Write("{0}%", percent);
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
             CleanUp();
+        }
+
+        public static void Calc()
+        {
+            stdPay = stdTime * wage;
+            oTimePay = oTime * (wage * 1.5);
+            gross = stdPay + oTimePay;
+            net = gross * (100 - 30) / 100;
         }
 
         public static void CleanUp()
@@ -72,7 +70,7 @@ namespace PayCheckEstimator
         {
             week++; //since week is set as 0 at the beginning, we need to add one (first call) for week one(1), and add 1 again to get week two(2)
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Enter week {0} hours: ", week);
+            Console.Write("Enter week {0} hours: ", week);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             holdingHours = Convert.ToDouble(Console.ReadLine());
             Console.ForegroundColor = ConsoleColor.White;
@@ -90,6 +88,27 @@ namespace PayCheckEstimator
                 stdTime = stdTime + holdingHours;
                 
             }
+        }
+
+        public static void GatherWages() // Main information gathering from user (stdWage, stdShop, hours, etc...)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;      //
+            Console.Write("Enter Standard Wages: ");              // Gather standard wages. will be used to calculate oWage
+            Console.ForegroundColor = ConsoleColor.DarkYellow;  //
+            wage = Convert.ToDouble(Console.ReadLine());        //
+            oWage = wage * 1.5;
+
+            Console.ForegroundColor = ConsoleColor.Yellow;      //
+            Console.Write("Enter shop wages: ");                  // Gather Shoptime wages, will be used to calculate shop pay and shop OT (if applicable)
+            Console.ForegroundColor = ConsoleColor.DarkYellow;  //
+            shopWage = Convert.ToDouble(Console.ReadLine());    //
+            oShop = shopWage * 1.5;
+        }
+
+        public static void Break()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("");
         }
     }
 }
